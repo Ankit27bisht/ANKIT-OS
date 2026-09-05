@@ -6,19 +6,22 @@ import OSWindow, { registerAppContents, type WindowState } from './components/Wi
 import Boot from './components/Boot'
 import type { AppKey } from './components/icons/OSIcon'
 import { appMeta } from './components/icons/OSIcon'
-import { contact } from './content'
+import { contact, navigation } from './content'
 
 import WorkApp from './components/apps/WorkApp'
+import SocialApp from './components/apps/SocialApp'
 import ContentStudioApp from './components/apps/ContentStudioApp'
 import CampaignsApp from './components/apps/CampaignsApp'
 import StrategyApp from './components/apps/StrategyApp'
 import AnalyticsApp from './components/apps/AnalyticsApp'
 import AboutApp from './components/apps/AboutApp'
 import RejectedIdeasApp from './components/apps/RejectedIdeasApp'
+import ContactApp from './components/apps/ContactApp'
 
 // Register app -> window content
 registerAppContents({
   work: <WorkApp />,
+  social: <SocialApp />,
   content: <ContentStudioApp />,
   campaigns: <CampaignsApp />,
   strategy: <StrategyApp />,
@@ -28,46 +31,18 @@ registerAppContents({
   linkedin: <div className="prose">
     <div className="app-head"><h2>LINKEDIN</h2></div>
     <div className="idea-note">
-      <span className="ph">● disabled — add your LinkedIn URL in src/content.ts</span>
-    </div>
-  </div>,
-  mail: <div className="prose">
-    <div className="app-head"><h2>CONTACT</h2></div>
-    <div className="idea-note">
-      <span className="ph">● editable placeholder email</span>
-      <p style={{ marginTop: '10px' }}>
-        Say hi: <a href={`mailto:${contact.email}`} style={{ color: 'var(--accent)' }}>{contact.emailDisplay}</a>
+      <span className="ph">● unavailable — add your LinkedIn URL in src/content.ts → contact.linkedin</span>
+      <p style={{ marginTop: '10px', fontSize: '13px' }}>
+        This app stays disabled until a real profile URL is configured. Once it is, refresh and it opens normally.
       </p>
-      <p style={{ fontSize: '12.5px', color: 'var(--ink-faint)' }}>Replace the email in src/content.ts → contact.email</p>
     </div>
   </div>,
+  mail: <ContactApp />,
   os: <div className="prose">
-    <div className="app-head"><h2>ABOUT_ME.TXT</h2></div>
-    <p>Open <strong>ABOUT_ME.TXT</strong> from the desktop or dock to read who's behind this OS.</p>
+    <div className="app-head"><h2>ABOUT ANKIT</h2></div>
+    <p>Open <strong>ABOUT ANKIT</strong> from the desktop or dock to read who&apos;s behind this OS.</p>
   </div>,
 })
-
-const DESKTOP_ICONS: AppKey[] = [
-  'work',
-  'content',
-  'campaigns',
-  'strategy',
-  'analytics',
-  'about',
-  'bin',
-]
-
-const DOCK_APPS: AppKey[] = [
-  'work',
-  'content',
-  'campaigns',
-  'strategy',
-  'analytics',
-  'about',
-  'bin',
-  'mail',
-  'linkedin',
-]
 
 // Generating positions that cascade/overlap nicely
 function cascade(n: number) {
@@ -163,8 +138,8 @@ export default function App() {
           />
         ))}
       </div>
-      <Desktop icons={DESKTOP_ICONS} openApp={openApp} openKeys={openKeys} activeApp={activeApp} />
-      <Dock apps={DOCK_APPS} openApp={openApp} openKeys={openKeys} disabled={disabled} activeApp={activeApp} />
+      <Desktop icons={navigation.desktop} openApp={openApp} openKeys={openKeys} activeApp={activeApp} disabled={disabled} />
+      <Dock apps={navigation.dock} openApp={openApp} openKeys={openKeys} disabled={disabled} activeApp={activeApp} />
     </div>
   )
 }

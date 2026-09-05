@@ -36,6 +36,7 @@ function PixelIcon({
 
 export type AppKey =
   | 'work'
+  | 'social'
   | 'content'
   | 'campaigns'
   | 'strategy'
@@ -48,15 +49,31 @@ export type AppKey =
 
 export const appMeta: Record<AppKey, { name: string; icon: JSX.Element }> = {
   work: { name: 'WORK.EXE', icon: <WorkIcon /> },
-  content: { name: 'CONTENT_STUDIO', icon: <ContentIcon /> },
-  campaigns: { name: 'CAMPAIGNS.DIR', icon: <CampaignsIcon /> },
-  strategy: { name: 'STRATEGY.SYS', icon: <StrategyIcon /> },
-  analytics: { name: 'ANALYTICS.DAT', icon: <AnalyticsIcon /> },
-  about: { name: 'ABOUT_ME.TXT', icon: <AboutIcon /> },
-  bin: { name: 'REJECTED_IDEAS', icon: <BinIcon /> },
+  social: { name: 'SOCIAL MEDIA', icon: <SocialIcon /> },
+  content: { name: 'CONTENT STUDIO', icon: <ContentIcon /> },
+  campaigns: { name: 'CAMPAIGN LAB', icon: <CampaignsIcon /> },
+  strategy: { name: 'STRATEGY', icon: <StrategyIcon /> },
+  analytics: { name: 'ANALYTICS', icon: <AnalyticsIcon /> },
+  about: { name: 'ABOUT ANKIT', icon: <AboutIcon /> },
+  bin: { name: 'REJECTED CONCEPTS', icon: <BinIcon /> },
   linkedin: { name: 'LINKEDIN', icon: <LinkedInIcon /> },
   mail: { name: 'CONTACT', icon: <MailIcon /> },
   os: { name: 'ANKIT.OS', icon: <OSIcon /> },
+}
+
+function SocialIcon() {
+  // speech bubble — social conversation
+  const map: Pixel[][] = [
+    ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
+    ['b', 'a', 'a', 'a', 'a', 'a', 'a', 'b'],
+    ['b', 'a', 'w', 'w', 'w', 'a', 'a', 'b'],
+    ['b', 'a', 'w', 'w', 'w', 'a', 'a', 'b'],
+    ['b', 'a', 'a', 'a', 'a', 'a', 'a', 'b'],
+    ['b', 'a', 'a', 'a', 'a', 'a', 'b', 'b'],
+    ['b', 'b', 'b', 'b', 'a', 'a', 'b', 'b'],
+    ['b', 'b', 'b', 'b', 'b', 'b', 'b', 'b'],
+  ]
+  return <PixelIcon map={map} colors={{ b: '#1e1840', a: '#ff5cc4', w: '#0f0c1d' }} size={46} />
 }
 
 function WorkIcon() {

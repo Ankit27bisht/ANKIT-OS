@@ -4,15 +4,16 @@ export default function RejectedIdeasApp() {
   return (
     <>
       <div className="app-head">
-        <h2>REJECTED_IDEAS</h2>
+        <h2>REJECTED CONCEPTS</h2>
         <div className="sub">// recycle bin — the creative process</div>
       </div>
 
-      <p className="prose" style={{ marginBottom: '18px' }}>{rejectedIdeas.intro}</p>
-
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '18px' }}>
-        <span className="ph">● placeholder content</span>
+      <div className="bin-header">
+        <span className="bin-title">RECYCLE BIN</span>
+        <span className="ph">● concept material</span>
       </div>
+
+      <p className="prose" style={{ marginBottom: '18px' }}>{rejectedIdeas.intro}</p>
 
       {rejectedIdeas.items.map((item, i) => (
         <div className="bin" key={i}>
@@ -29,7 +30,7 @@ export default function RejectedIdeasApp() {
       ))}
 
       <p className="prose" style={{ marginTop: '18px', fontSize: '12.5px' }}>
-        Every idea in here did its job — it clarified what worked. Nothing is wasted in the pipeline; it all feeds the next post.
+        Every idea in here did its job — it clarified what worked. Nothing is wasted; it all feeds the next post.
       </p>
     </>
   )

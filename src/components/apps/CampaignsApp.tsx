@@ -1,51 +1,43 @@
 import { campaigns } from '../../content'
 
+const FRAMEWORK: { key: keyof (typeof campaigns)['items'][number]; label: string; wide?: boolean }[] = [
+  { key: 'objective', label: 'OBJECTIVE' },
+  { key: 'audience', label: 'AUDIENCE' },
+  { key: 'insight', label: 'INSIGHT' },
+  { key: 'bigIdea', label: 'BIG IDEA' },
+  { key: 'execution', label: 'EXECUTION', wide: true },
+  { key: 'measurement', label: 'MEASUREMENT', wide: true },
+]
+
 export default function CampaignsApp() {
   return (
     <>
       <div className="app-head">
-        <h2>CAMPAIGNS.DIR</h2>
-        <div className="sub">// campaign concepts — objective to execution</div>
+        <h2>CAMPAIGN LAB</h2>
+        <div className="sub">// objective to measurement — conceptual blueprints</div>
       </div>
 
       <p className="prose" style={{ marginBottom: '18px' }}>
         {campaigns.intro}
       </p>
 
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '18px' }}>
-        <span className="ph">● placeholder content</span>
-      </div>
-
       {campaigns.items.map((c) => (
         <div className="campaign" key={c.id}>
           <div className="camp-head">
+            <span className="camp-chip">CONCEPT PROJECT</span>
             <span style={{ color: 'var(--accent)' }}>▍</span>
             {c.title}
-            {c.placeholder && (
+            {c.concept && (
               <span className="ph" style={{ marginLeft: 'auto', fontSize: '11px' }}>PLACEHOLDER</span>
             )}
           </div>
           <div className="camp-body">
-            <div className="cfg">
-              <span className="cfg-label">OBJECTIVE</span>
-              {c.objective}
-            </div>
-            <div className="cfg">
-              <span className="cfg-label">AUDIENCE</span>
-              {c.audience}
-            </div>
-            <div className="cfg">
-              <span className="cfg-label">BIG IDEA</span>
-              {c.bigIdea}
-            </div>
-            <div className="cfg">
-              <span className="cfg-label">CREATIVE DIRECTION</span>
-              {c.creativeDirection}
-            </div>
-            <div className="cfg" style={{ gridColumn: '1 / -1' }}>
-              <span className="cfg-label">CONTENT EXECUTION</span>
-              {c.execution}
-            </div>
+            {FRAMEWORK.map((f) => (
+              <div className="cfg" key={f.key} style={f.wide ? { gridColumn: '1 / -1' } : undefined}>
+                <span className="cfg-label">{f.label}</span>
+                {String(c[f.key])}
+              </div>
+            ))}
           </div>
         </div>
       ))}

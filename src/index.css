@@ -25,6 +25,7 @@
   --font-pixel: 'VT323', monospace;
   --font-sans: 'Space Grotesk', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+  --font-hand: 'Caveat', cursive;
 
   /* Layout */
   --bar-h: 34px;
@@ -229,25 +230,108 @@ button {
   height: 100%;
   z-index: 1;
   pointer-events: none;
+  display: grid;
+  grid-template-columns: 268px 1fr 340px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 26px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+/* Desktop object: small file-system artifact folded under the icon rail */
+.artifact-files {
+  width: 150px;
+  background: color-mix(in srgb, var(--bg-3) 72%, transparent);
+  border: 1px solid var(--line-soft);
+  border-top: 2px solid color-mix(in srgb, var(--accent-6) 55%, var(--line));
+  box-shadow: var(--pixel-shadow);
+  padding: 8px 11px 9px;
+  font-family: var(--font-mono);
+}
+
+.artifact-files .files-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--ink-faint);
+}
+
+.artifact-files .files-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 8px;
+}
+
+.artifact-files .files-list li {
+  display: flex;
+  align-items: baseline;
+  gap: 7px;
+  font-size: 10.5px;
+  color: var(--ink-dim);
+  letter-spacing: 0.4px;
+}
+
+.artifact-files .files-list li::before {
+  content: '▣';
+  font-size: 9px;
+  color: var(--accent-6);
+}
+
+.artifact-files .files-list li.hl {
+  color: var(--ink);
+}
+.artifact-files .files-list li.hl::before {
+  color: var(--accent-5);
+}
+
+.artifact-files .files-foot {
+  margin-top: 9px;
+  padding-top: 7px;
+  border-top: 1px dashed var(--line-soft);
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--accent-3);
+}
+
+.desktop-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  align-self: start;
+  margin-top: 20px;
+  pointer-events: none;
+  min-width: 0;
+}
+.desktop-left > * {
+  pointer-events: auto;
 }
 
 .desktop-icons {
-  position: absolute;
-  left: 20px;
-  top: 20px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  flex-wrap: wrap;
+  align-content: flex-start;
+  width: 240px;
+  max-height: 50vh;
+  gap: 8px 14px;
   pointer-events: auto;
 }
 
 .desktop-icon {
-  width: 120px;
+  width: 112px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 8px;
-  padding: 10px 8px 12px;
+  gap: 7px;
+  padding: 10px 6px 12px;
   border-radius: 8px;
   border: 1px solid transparent;
   background: transparent;
@@ -258,8 +342,8 @@ button {
 }
 
 .desktop-icon .ic {
-  width: 50px;
-  height: 50px;
+  width: 46px;
+  height: 46px;
   display: grid;
   place-items: center;
   filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.45));
@@ -268,8 +352,8 @@ button {
 
 .desktop-icon .label {
   font-family: var(--font-pixel);
-  font-size: 14px;
-  line-height: 1.05;
+  font-size: 13px;
+  line-height: 1.1;
   color: var(--ink);
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
   white-space: nowrap;
@@ -306,6 +390,20 @@ button {
   box-shadow: var(--pixel-shadow), 0 0 14px rgba(124, 92, 255, 0.18);
 }
 
+.desktop-icon.disabled {
+  opacity: 0.45;
+  filter: saturate(0.4);
+  cursor: not-allowed;
+}
+.desktop-icon.disabled:hover {
+  transform: none;
+  background: transparent;
+  border-color: transparent;
+}
+.desktop-icon.disabled:hover .ic {
+  transform: none;
+}
+
 .desktop-icon .icon-dot {
   position: absolute;
   top: 8px;
@@ -317,26 +415,50 @@ button {
   box-shadow: 0 0 6px var(--accent-3);
 }
 
-/* Center identity (decorative presence anchor) */
+/* Center: character embedded in a small scatter of desktop objects */
 .desktop-center {
-  position: absolute;
-  left: 27%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
+  width: 480px;
+  height: 580px;
   pointer-events: none;
   z-index: 0;
 }
+.desktop-center > * {
+  pointer-events: auto;
+}
 
 .identity-card {
+  position: absolute;
+  left: 0;
+  top: 66px;
+  width: 200px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 10px;
-  padding: 18px 22px 14px;
+  gap: 7px;
+  padding: 12px 14px 14px;
   background: color-mix(in srgb, var(--bg-2) 62%, transparent);
   border: 1px solid var(--line-soft);
   box-shadow: var(--pixel-shadow);
   backdrop-filter: blur(3px);
+}
+
+.identity-tab {
+  position: absolute;
+  top: -11px;
+  left: 10px;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--ink-faint);
+  background: var(--bg-3);
+  border: 1px solid var(--line-soft);
+  border-bottom: none;
+  padding: 2px 8px;
+}
+.identity-tab::before {
+  content: '▣ ';
+  color: var(--accent-6);
 }
 
 .identity-frame {
@@ -347,10 +469,11 @@ button {
 
 .identity-name {
   font-family: var(--font-pixel);
-  font-size: 21px;
+  font-size: 18px;
   letter-spacing: 2px;
   color: var(--ink);
-  margin-top: 4px;
+  margin-top: 5px;
+  white-space: nowrap;
 }
 
 .identity-role {
@@ -358,6 +481,26 @@ button {
   font-size: 9px;
   letter-spacing: 1.5px;
   color: var(--ink-faint);
+  white-space: nowrap;
+}
+
+.identity-online {
+  margin-top: 4px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--accent-3);
+}
+
+.identity-online .online-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--accent-3);
+  box-shadow: 0 0 8px var(--accent-3);
 }
 
 .identity-status {
@@ -379,22 +522,152 @@ button {
   56%, 100% { opacity: 0; }
 }
 
-/* Right column: profile window + widgets */
-.desktop-right {
+/* Desktop object: small music-player artifact */
+.desktop-player {
   position: absolute;
-  right: 4%;
-  top: 50%;
-  transform: translateY(-50%);
+  left: 226px;
+  top: 6px;
+  width: 204px;
+  background: color-mix(in srgb, var(--bg-3) 76%, transparent);
+  border: 1px solid var(--line-soft);
+  border-top: 2px solid color-mix(in srgb, var(--accent-5) 55%, var(--line));
+  box-shadow: var(--pixel-shadow);
+  padding: 8px 12px 10px;
+  font-family: var(--font-mono);
+}
+
+.desktop-player .player-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--ink-faint);
+}
+.desktop-player .player-bar .now {
+  color: var(--ink-dim);
+  letter-spacing: 1px;
+}
+
+.desktop-player .player-track {
+  margin-top: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+.desktop-player .player-track .eq {
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--accent-5);
+}
+
+.desktop-player .player-progress {
+  margin-top: 7px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line-soft);
+}
+.desktop-player .player-progress .fill {
+  display: block;
+  height: 100%;
+  width: 34%;
+  background: var(--accent-5);
+}
+
+.desktop-player .player-controls {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+.desktop-player .player-controls .play {
+  color: var(--accent-5);
+}
+.desktop-player .player-controls .vol {
+  margin-left: auto;
+  font-size: 9px;
+  letter-spacing: 1px;
+  color: var(--ink-faint);
+}
+
+/* Desktop object: SIGNAL.LOG notebook slip */
+.desktop-signal {
+  position: absolute;
+  left: 226px;
+  top: 176px;
+  width: 232px;
+  background: color-mix(in srgb, var(--accent-5) 6%, var(--bg-3));
+  border: 1px solid var(--line-soft);
+  border-left: 3px solid var(--accent-5);
+  box-shadow: var(--pixel-shadow);
+  padding: 10px 12px 12px;
+}
+
+.desktop-signal .signal-title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--accent-5);
+}
+.desktop-signal .signal-title .live {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 9px;
+  color: var(--accent-3);
+}
+.desktop-signal .signal-title .live::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--accent-3);
+  box-shadow: 0 0 6px var(--accent-3);
+}
+
+.desktop-signal .signal-list {
+  list-style: none;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
-  gap: 14px;
+  gap: 4px;
+  margin-top: 8px;
+}
+.desktop-signal .signal-list li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-dim);
+}
+.desktop-signal .signal-list li .si {
+  color: var(--accent-5);
+  font-size: 9px;
+  flex-shrink: 0;
+}
+
+/* Right column: profile window + compact widgets */
+.desktop-right {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
   pointer-events: none;
+}
+.desktop-right > * {
+  pointer-events: auto;
 }
 
 /* Intro block — center/right profile window */
 .intro {
-  width: 430px;
+  width: 100%;
   text-align: left;
   pointer-events: auto;
   padding: 0;
@@ -528,7 +801,7 @@ button {
   flex-direction: column;
   gap: 10px;
   align-items: stretch;
-  width: 340px;
+  width: 100%;
   pointer-events: auto;
 }
 
@@ -628,6 +901,87 @@ button {
   font-size: 8px;
 }
 
+.widget .signal-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.widget .signal-list li {
+  display: flex;
+  gap: 8px;
+  align-items: baseline;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-dim);
+}
+.widget .signal-list li .signal-idx {
+  color: var(--accent-5);
+  font-size: 10px;
+  flex-shrink: 0;
+}
+
+/* Sticky note — handed note pinned bottom-right of the cluster */
+.sticky-note {
+  position: absolute;
+  left: 230px;
+  top: 404px;
+  width: 250px;
+  background: linear-gradient(176deg, var(--accent-4) 4%, color-mix(in srgb, var(--accent-4) 88%, #ffd98a) 96%);
+  border: none;
+  border-radius: 2px;
+  padding: 16px 18px 13px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4), var(--pixel-shadow);
+  transform: rotate(-0.8deg);
+  pointer-events: auto;
+  font-family: var(--font-hand);
+  color: #241a12;
+}
+.sticky-note:hover {
+  transform: rotate(0.2deg);
+  transition: transform 0.15s ease;
+}
+
+.sticky-note .sticky-tape {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  transform: translateX(-50%) rotate(2deg);
+  width: 82px;
+  height: 20px;
+  background: color-mix(in srgb, var(--panel-2) 82%, #fff);
+  border-left: 1px dashed rgba(255, 255, 255, 0.35);
+  border-right: 1px dashed rgba(255, 255, 255, 0.35);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.25);
+}
+
+.sticky-note .sticky-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  font-family: var(--font-hand);
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.25;
+  color: #241a12;
+}
+
+.sticky-note .sticky-note-foot {
+  margin-top: 8px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  font-family: var(--font-mono);
+  font-size: 8.5px;
+  font-weight: 400;
+  letter-spacing: 1.5px;
+  color: color-mix(in srgb, #241a12 55%, transparent);
+}
+.sticky-note .sticky-note-foot .pin {
+  color: #241a12;
+  font-size: 11px;
+}
+
 /* Placeholder tag */
 .ph {
   display: inline-flex;
@@ -647,8 +1001,9 @@ button {
 .dock {
   height: var(--dock-h);
   flex-shrink: 0;
-  background: color-mix(in srgb, var(--bg-3) 90%, var(--bg));
+  background: linear-gradient(180deg, color-mix(in srgb, var(--bg-2) 70%, var(--bg)), var(--bg-3));
   border-top: 1px solid var(--line);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--accent) 12%, transparent);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -791,11 +1146,12 @@ button {
 
 /* Per-app accent token */
 .os-window[data-app='work'] { --app-accent: var(--accent); }
+.os-window[data-app='social'] { --app-accent: var(--accent-2); }
 .os-window[data-app='content'] { --app-accent: var(--accent-3); }
 .os-window[data-app='campaigns'] { --app-accent: var(--accent-4); }
-.os-window[data-app='strategy'] { --app-accent: var(--accent-2); }
+.os-window[data-app='strategy'] { --app-accent: var(--accent-6); }
 .os-window[data-app='analytics'] { --app-accent: var(--accent-5); }
-.os-window[data-app='about'] { --app-accent: var(--accent-6); }
+.os-window[data-app='about'] { --app-accent: var(--accent); }
 .os-window[data-app='bin'] { --app-accent: var(--ink-faint); }
 .os-window[data-app='mail'] { --app-accent: var(--danger); }
 .os-window[data-app='linkedin'] { --app-accent: var(--accent-5); }
@@ -1301,6 +1657,293 @@ table.os tr:hover td {
   color: var(--accent);
 }
 
+/* ----------------------------------------------------------------
+   App personalities — one design system, distinct treatments
+--------------------------------------------------------------- */
+/* Social */
+.social-block {
+  border: 1px solid var(--line-soft);
+  background: var(--bg-3);
+  padding: 14px;
+  box-shadow: var(--pixel-shadow);
+  transition: border-color 0.12s ease, transform 0.12s ease;
+}
+.social-block:hover {
+  border-color: var(--accent-2);
+  transform: translateY(-2px);
+}
+.social-block .social-label {
+  font-family: var(--font-pixel);
+  font-size: 15px;
+  color: var(--app-accent, var(--accent-2));
+  margin-bottom: 4px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+.social-block .social-heading {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ink-dim);
+  margin-bottom: 6px;
+}
+
+/* Strategy */
+.strategy-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+}
+.strategy-card {
+  border: 1px solid var(--line-soft);
+  border-top: 3px solid var(--app-accent, var(--accent-6));
+  background: linear-gradient(180deg, var(--panel), var(--bg-3));
+  padding: 16px;
+  box-shadow: var(--pixel-shadow);
+}
+.strategy-card .strategy-label {
+  font-family: var(--font-pixel);
+  font-size: 16px;
+  color: var(--app-accent, var(--accent-6));
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+.strategy-card .strategy-lead {
+  font-size: 13.5px;
+  font-weight: 600;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.strategy-card .lane-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.strategy-card .lane {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px dashed var(--line-soft);
+  background: var(--bg-2);
+  padding: 8px 10px;
+}
+.strategy-card .lane .lane-name {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  color: var(--accent-3);
+}
+.strategy-card .lane .lane-note {
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+/* Analytics */
+.analytics-banner {
+  border: 1px solid color-mix(in srgb, var(--accent-5) 40%, var(--line));
+  border-left: 3px solid var(--accent-5);
+  background: color-mix(in srgb, var(--accent-5) 8%, var(--bg-3));
+  padding: 12px 16px;
+  margin-bottom: 18px;
+}
+.analytics-banner .analytics-tag {
+  font-family: var(--font-pixel);
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: var(--accent-5);
+}
+.analytics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 16px;
+  margin-bottom: 22px;
+}
+.analytics-block {
+  border: 1px solid var(--line-soft);
+  background: var(--bg-3);
+  padding: 14px;
+}
+.analytics-block .analytics-label {
+  font-family: var(--font-pixel);
+  font-size: 15px;
+  color: var(--app-accent, var(--accent-5));
+  margin-bottom: 6px;
+}
+.analytics-block .analytics-note {
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--ink);
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+/* Campaigns — concept chip */
+.camp-head .camp-chip {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #1a1433;
+  background: var(--accent-4);
+  padding: 2px 6px;
+  border-radius: 2px;
+}
+
+/* Recycle bin header */
+.bin-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+.bin-header .bin-title {
+  font-family: var(--font-pixel);
+  font-size: 20px;
+  color: var(--app-accent, var(--ink-faint));
+  letter-spacing: 1px;
+}
+
+/* Contact */
+.contact-card {
+  border: 1px solid var(--line);
+  background: var(--bg-3);
+  padding: 16px;
+  box-shadow: var(--pixel-shadow);
+}
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--line-soft);
+  flex-wrap: wrap;
+}
+.contact-row:last-of-type {
+  border-bottom: none;
+}
+.contact-key {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--accent);
+  min-width: 76px;
+}
+.contact-value {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--ink);
+  word-break: break-all;
+}
+.contact-value.off {
+  color: var(--ink-faint);
+  font-style: italic;
+}
+.contact-value.link {
+  color: var(--accent-5);
+}
+.contact-hint {
+  font-size: 12px;
+  color: var(--ink-faint);
+  margin-top: 6px;
+  line-height: 1.5;
+}
+.copy-btn {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ink);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: border-color 0.1s ease, color 0.1s ease;
+}
+.copy-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent-3);
+}
+
+/* Projects (WORK) */
+.project-head {
+  padding: 16px 18px 14px;
+  border-bottom: 1px solid var(--line);
+  background: linear-gradient(180deg, var(--panel), transparent);
+}
+.project-kicker {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-family: var(--font-pixel);
+  font-size: 13px;
+  color: var(--app-accent, var(--accent-2));
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+}
+.project-head h3 {
+  font-family: var(--font-pixel);
+  font-size: 24px;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.project-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.project-meta .pm {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.8px;
+  color: var(--ink-dim);
+  border: 1px solid var(--line-soft);
+  background: var(--bg-2);
+  padding: 3px 8px;
+  text-transform: uppercase;
+}
+.project-section-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: var(--app-accent, var(--accent));
+  margin-bottom: 6px;
+}
+.project-overview {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.project-overview p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}
+.project-visuals {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.project-visuals .visuals-box {
+  border: 2px dashed var(--line);
+  background: color-mix(in srgb, var(--bg-2) 60%, transparent);
+  padding: 22px 14px;
+  display: grid;
+  place-items: center;
+  min-height: 74px;
+}
+.project-visuals .visuals-hint {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--ink-faint);
+  letter-spacing: 1px;
+}
+
 /* Avatar */
 .avatar-wrap {
   display: flex;
@@ -1371,7 +2014,7 @@ table.os tr:hover td {
 /* ----------------------------------------------------------------
    Responsive — mobile is an app-launcher + panel OS, not a shrunken desktop
 ---------------------------------------------------------------- */
-@media (max-width: 900px) {
+@media (max-width: 1199px) {
   :root {
     --bar-h: 30px;
     --dock-h: 62px;
@@ -1394,6 +2037,7 @@ table.os tr:hover td {
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: center;
+    max-height: none;
     gap: 8px;
     width: calc(100% - 20px);
     margin: 14px auto 0;
@@ -1424,16 +2068,37 @@ table.os tr:hover td {
     right: 8px;
   }
 
-  /* Center identity moves into the page flow */
-  .desktop-center {
-    position: static;
-    transform: none;
-    display: flex;
-    justify-content: center;
-    margin: 18px auto 0;
+  /* Left stack becomes a page-flow column */
+  .desktop-left {
+    display: block;
+  }
+  .desktop-left .artifact-files {
+    display: none;
   }
 
-  /* Right column stacks full-width underneath */
+  /* Center identity moves into the page flow, cluster unwraps */
+  .desktop-center {
+    position: static;
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 18px auto 0;
+    gap: 14px;
+  }
+  .identity-card {
+    position: static;
+    width: auto;
+    padding: 18px 28px 16px;
+  }
+  .desktop-player {
+    display: none;
+  }
+  .desktop-signal {
+    display: none;
+  }
   .desktop-right {
     position: static;
     transform: none;
@@ -1447,6 +2112,13 @@ table.os tr:hover td {
   }
   .desktop-widgets {
     width: 100%;
+  }
+  .sticky-note {
+    position: static;
+    width: 100%;
+    max-width: 420px;
+    align-self: stretch;
+    transform: none;
   }
   .intro .hello {
     font-size: 32px;
@@ -1538,27 +2210,64 @@ table.os tr:hover td {
   .grid-2 {
     grid-template-columns: 1fr;
   }
+  .strategy-grid {
+    grid-template-columns: 1fr;
+  }
+  .analytics-grid {
+    grid-template-columns: 1fr;
+  }
   .campaign .camp-body {
     grid-template-columns: 1fr;
   }
-}
-
-/* Short desktop windows: anchor instead of vertical-center so nothing clips */
-@media (max-height: 820px) and (min-width: 901px) {
-  .desktop-right {
-    top: 18px;
+  .sticky-note {
     transform: none;
   }
-  .desktop-center {
-    top: 200px;
-    transform: translateX(-50%);
+}
+
+/* Short desktop windows: keep the composed scene but let it scroll and stay compact */
+@media (max-height: 820px) and (min-width: 1200px) {
+  .desktop {
+    overflow-y: auto;
+    overflow-x: hidden;
   }
-  /* Compact the icon rail so all 7 icons stay above the dock */
+  .desktop-inner {
+    min-height: 100%;
+    align-items: center;
+  }
+  .desktop-center {
+    width: 430px;
+    height: 470px;
+  }
+  .identity-card {
+    top: 20px;
+  }
+  .identity-frame {
+    padding: 6px;
+  }
+  .identity-frame img,
+  .identity-frame svg {
+    width: 74px;
+    height: 74px;
+  }
+  .identity-name {
+    font-size: 16px;
+    letter-spacing: 1.5px;
+  }
+  .desktop-player {
+    left: 204px;
+    top: 0;
+  }
+  .desktop-signal {
+    left: 204px;
+    top: 128px;
+    width: 210px;
+  }
   .desktop-icons {
+    max-height: 50vh;
     gap: 6px;
   }
   .desktop-icon {
-    width: 110px;
+    width: 108px;
     padding: 8px 6px 10px;
     gap: 6px;
   }
@@ -1576,7 +2285,16 @@ table.os tr:hover td {
     top: 5px;
     right: 8px;
   }
+  .desktop-left {
+    gap: 16px;
+  }
+  .artifact-files {
+    display: none;
+  }
   /* Compact widgets so the stack stays above the dock */
+  .desktop-right {
+    gap: 10px;
+  }
   .desktop-widgets {
     gap: 8px;
   }

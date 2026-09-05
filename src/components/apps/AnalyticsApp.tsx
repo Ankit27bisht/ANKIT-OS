@@ -4,18 +4,33 @@ export default function AnalyticsApp() {
   return (
     <>
       <div className="app-head">
-        <h2>ANALYTICS.DAT</h2>
-        <div className="sub">// what I measure & why</div>
+        <h2>ANALYTICS</h2>
+        <div className="sub">// proof, not noise</div>
       </div>
 
-      <p className="prose" style={{ marginBottom: '18px' }}>
-        {analytics.intro}
-      </p>
+      <div className="analytics-banner">
+        <span className="analytics-tag">{analytics.tagline}</span>
+        <p className="prose" style={{ margin: '8px 0 0' }}>{analytics.intro}</p>
+      </div>
 
-      <p className="idea-note" style={{ marginBottom: '18px' }}>
-        {analytics.startingWith}
-      </p>
+      <div className="analytics-grid">
+        {analytics.sections.map((s) => (
+          <div className="analytics-block" key={s.id}>
+            <div className="analytics-label">{s.label}</div>
+            <p className="analytics-note">{s.note}</p>
+            <ul className="check-list" style={{ marginBottom: 0 }}>
+              {s.points.map((p, i) => (
+                <li key={i}>
+                  <span className="chk">▸</span>
+                  <span>{p}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
 
+      <div className="section-label" style={{ marginTop: '22px' }}>{analytics.metricHeadline}</div>
       <table className="os">
         <thead>
           <tr>

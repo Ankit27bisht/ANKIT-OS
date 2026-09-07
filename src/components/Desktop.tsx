@@ -2,6 +2,16 @@ import { appMeta, type AppKey } from './icons/OSIcon'
 import Avatar from './Avatar'
 import { intro, desktopWidgets, stickyNote, profile } from '../content'
 
+const desktopRailApps: AppKey[] = [
+  'about',
+  'social',
+  'campaigns',
+  'content',
+  'analytics',
+  'strategy',
+  'linkedin',
+]
+
 interface Props {
   icons: AppKey[]
   openApp: (app: AppKey) => void
@@ -10,13 +20,13 @@ interface Props {
   disabled: (app: AppKey) => boolean
 }
 
-export default function Desktop({ icons, openApp, openKeys, activeApp, disabled }: Props) {
+export default function Desktop({ openApp, openKeys, activeApp, disabled }: Props) {
   return (
     <div className="desktop">
       <div className="desktop-inner">
         <div className="desktop-left">
           <div className="desktop-icons" aria-label="Application icons">
-            {icons.map((app) => {
+            {desktopRailApps.map((app) => {
               const isOpen = openKeys.has(app)
               const isActive = activeApp === app
               const isDisabled = disabled(app)
@@ -56,20 +66,32 @@ export default function Desktop({ icons, openApp, openKeys, activeApp, disabled 
         </div>
 
         <div className="desktop-center">
-          <div className="identity-card" aria-hidden="true">
-            <div className="identity-tab">PROFILE.DAT</div>
-            <div className="identity-frame">
-              <Avatar size={100} />
+          <div className="workstation-scene" aria-label="Pixel-art Ankit workstation">
+            <div className="scene-room-backdrop" aria-hidden="true">
+              <div className="scene-city"><span /><span /><span /><span /><span /></div>
+              <div className="scene-room-shelf"><i /><i /><i /></div>
             </div>
-            <div className="identity-name">{profile.osName}</div>
-            <div className="identity-role">{profile.role.toUpperCase()}</div>
-            <div className="identity-online">
+            <div className="scene-window" aria-hidden="true">
+              <span className="scene-window-line" />
+              <span className="scene-window-line" />
+              <span className="scene-window-light" />
+            </div>
+            <div className="scene-monitor" aria-hidden="true">
+              <div className="scene-monitor-screen">ANKIT.OS<br /><strong>READY</strong></div>
+              <span className="scene-monitor-stand" />
+            </div>
+            <div className="scene-avatar-ground" aria-hidden="true" />
+            <Avatar size={270} className="scene-avatar" />
+            <div className="scene-desk" aria-hidden="true">
+              <span className="scene-desk-leg left" />
+              <span className="scene-desk-leg right" />
+              <span className="scene-desk-lamp" />
+              <span className="scene-desk-book" />
+              <span className="scene-desk-cup" />
+            </div>
+            <div className="scene-profile">
               <span className="online-dot" aria-hidden="true" />
-              <span>{profile.status}</span>
-            </div>
-            <div className="identity-status">
-              <span>{'>'} workspace: ready</span>
-              <span className="cursor" aria-hidden="true">▌</span>
+              <span>{profile.osName} / {profile.role.toUpperCase()} / {profile.status}</span>
             </div>
           </div>
 

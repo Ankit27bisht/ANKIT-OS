@@ -11,12 +11,9 @@
 //   3. Desktop widgets & sticky note
 //   4. Social media
 //   5. Content studio
-//   6. Campaign lab
-//   7. Strategy
-//   8. Analytics
-//   9. Projects (WORK — editable project slots)
-//  10. Rejected concepts
-//  11. Contact + LinkedIn
+//   6. Projects (WORK — editable project slots)
+//   7. Rejected concepts
+//   8. Contact + LinkedIn
 // ============================================================================
 
 import type { AppKey } from './components/icons/OSIcon'
@@ -64,23 +61,15 @@ export const navigation: { desktop: AppKey[]; dock: AppKey[] } = {
   desktop: [
     'about',
     'social',
-    'campaigns',
+    'work',
     'content',
-    'strategy',
-    'analytics',
     'linkedin',
-    'bin',
   ],
   dock: [
-    'work',
     'about',
     'social',
-    'campaigns',
+    'work',
     'content',
-    'strategy',
-    'analytics',
-    'bin',
-    'mail',
     'linkedin',
   ],
 }
@@ -91,7 +80,8 @@ export const navigation: { desktop: AppKey[]; dock: AppKey[] } = {
 export const intro = {
   name: 'Hi, I\'m Ankit.',
   role: 'Marketing & Social Media',
-  tagline: 'I turn ideas into content, campaigns and social experiences.',
+  tagline: 'I help brands grow with content\nthat connects, campaigns that perform,\nand strategies that make an impact.',
+  tags: ['Social Media', 'Content Creation', 'Strategy', 'Brand Growth', 'Creative Thinking'],
   exploreLabel: 'Open my work',
 }
 
@@ -237,163 +227,7 @@ export const contentStudio = {
 }
 
 // ---------------------------------------------------------------------------
-// 6. CAMPAIGN LAB  (campaign framework + CONCEPT PROJECT blueprints only)
-// ---------------------------------------------------------------------------
-export const campaigns = {
-  intro:
-    'Campaign thinking from objective to measurement. These are conceptual blueprints marked CONCEPT PROJECT — never presented as real shipped work.',
-  items: [
-    {
-      id: 'camp1',
-      title: '[EDIT: Campaign name]',
-      concept: true,
-      objective: '[EDIT: The business objective this campaign serves]',
-      audience: '[EDIT: Primary audience + what they care about]',
-      insight: '[EDIT: The sharp observation the campaign is built on]',
-      bigIdea: '[EDIT: The single central idea of the campaign]',
-      execution: '[EDIT: Channels, formats, cadence, how it comes to life]',
-      measurement: '[EDIT: The one or two behaviours/outcomes you would watch]',
-    },
-    {
-      id: 'camp2',
-      title: '[EDIT: Campaign name]',
-      concept: true,
-      objective: '[EDIT: The business objective]',
-      audience: '[EDIT: Audience]',
-      insight: '[EDIT: Insight]',
-      bigIdea: '[EDIT: Big idea]',
-      execution: '[EDIT: Execution plan]',
-      measurement: '[EDIT: Measurement]',
-    },
-    {
-      id: 'camp3',
-      title: '[EDIT: Campaign name]',
-      concept: true,
-      objective: '[EDIT: The business objective]',
-      audience: '[EDIT: Audience]',
-      insight: '[EDIT: Insight]',
-      bigIdea: '[EDIT: Big idea]',
-      execution: '[EDIT: Execution plan]',
-      measurement: '[EDIT: Measurement]',
-    },
-  ],
-}
-
-// ---------------------------------------------------------------------------
-// 7. STRATEGY  (how I think — frameworks, not textbooks)
-// ---------------------------------------------------------------------------
-export const strategy = {
-  intro:
-    'How I think. Sharp and human — the frameworks I actually use, not corporate noise.',
-  sections: [
-    {
-      id: 'audience',
-      label: 'AUDIENCE',
-      lead: 'Start with the moment, tension or desire — not just a demographic label.',
-      notes: [
-        '[EDIT: Replace with your own line on audience thinking]',
-      ],
-    },
-    {
-      id: 'content',
-      label: 'CONTENT',
-      lead: 'Build content lanes that earn attention differently:',
-      lanes: [
-        { name: 'UTILITY', note: '[EDIT: practical value people can take and use]' },
-        { name: 'POV', note: '[EDIT: a clear point of view people can align with or argue with]' },
-        { name: 'PROOF', note: '[EDIT: evidence and specifics that build trust]' },
-        { name: 'PARTICIPATION', note: '[EDIT: hooks that invite people to add to the story]' },
-      ],
-    },
-    {
-      id: 'testing',
-      label: 'TESTING',
-      lead: 'Keep the hypothesis visible. Change one meaningful variable. Learn from the signal.',
-      notes: [
-        '[EDIT: Replace with your own line on testing]',
-      ],
-    },
-    {
-      id: 'campaign',
-      label: 'CAMPAIGN',
-      lead: 'Give the idea a world, then give that world multiple ways to enter.',
-      notes: [
-        '[EDIT: Replace with your own line on campaign thinking]',
-      ],
-    },
-  ],
-}
-
-// ---------------------------------------------------------------------------
-// 8. ANALYTICS  (proof, not noise — NO invented performance numbers)
-// ---------------------------------------------------------------------------
-export const analytics = {
-  tagline: 'PROOF, NOT NOISE.',
-  intro:
-    'What I measure and why. This is a metric framework and a testing philosophy — never fabricated campaign performance.',
-  sections: [
-    {
-      id: 'measure',
-      label: 'WHAT I WOULD MEASURE',
-      note: 'Quality of attention beats volume. I watch things that imply engagement, not just reach.',
-      points: [
-        'Watch time, completion rate, dwell time, saves and shares.',
-        'Signals that people acted, rather than just passed by.',
-      ],
-    },
-    {
-      id: 'test',
-      label: 'WHAT I WOULD TEST',
-      note: 'One variable at a time, with the hypothesis written down first.',
-      points: [
-        'Hooks, formats, length, calls to action.',
-        'Sequence changes — not everything with a new idea at once.',
-      ],
-    },
-    {
-      id: 'signals',
-      label: 'WHAT SIGNALS MATTER',
-      note: 'Comments, DMs, saves, replies and follows that indicate real resonance.',
-      points: [
-        'Repeat behaviour — do people come back for the next one?',
-        'Depth of conversation over size of the audience.',
-      ],
-    },
-    {
-      id: 'optimize',
-      label: 'HOW I WOULD OPTIMIZE',
-      note: 'Iteration is the strategy. Kill what flops without drama; double down on signal.',
-      points: [
-        'Use directional results to shape the next round.',
-        'Feed every learning back into the content system.',
-      ],
-    },
-  ],
-  metricHeadline: 'METRIC FRAMEWORK — WHAT I WOULD WATCH',
-  metrics: [
-    {
-      metric: 'Quality of attention',
-      what: 'Watch time, completion rate, dwell time, saves and shares — signs people actually engaged, not just passed by.',
-    },
-    {
-      metric: 'Format performance',
-      what: 'Which formats (reels, carousels, static, text posts) earn disproportionate attention from the same audience.',
-    },
-    {
-      metric: 'Audience response',
-      what: 'Comments, DMs, saves, replies and follows that indicate resonance — not just likes.',
-    },
-    {
-      metric: 'Testing & iteration',
-      what: 'What I tested, one variable at a time, and what the directional result tells us to double down on or kill.',
-    },
-  ],
-  note:
-    'This portfolio never fabricates campaign performance. Any figures shown anywhere would reflect real, labelled data from my actual accounts.',
-}
-
-// ---------------------------------------------------------------------------
-// 9. PROJECTS (WORK) — editable project slots, no invented projects
+// 6. PROJECTS (WORK) — editable project slots, no invented projects
 // ---------------------------------------------------------------------------
 export const projects = [
   {

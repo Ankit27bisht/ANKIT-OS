@@ -1,4 +1,4 @@
-import { useState, useCallback, useMemo } from 'react'
+import { useState, useCallback, useMemo, useRef } from 'react'
 import SystemBar from './components/SystemBar'
 import Desktop from './components/Desktop'
 import Dock from './components/Dock'
@@ -6,14 +6,11 @@ import OSWindow, { registerAppContents, type WindowState } from './components/Wi
 import Boot from './components/Boot'
 import type { AppKey } from './components/icons/OSIcon'
 import { appMeta } from './components/icons/OSIcon'
-import { contact, navigation } from './content'
+import { navigation } from './content'
 
 import WorkApp from './components/apps/WorkApp'
 import SocialApp from './components/apps/SocialApp'
 import ContentStudioApp from './components/apps/ContentStudioApp'
-import CampaignsApp from './components/apps/CampaignsApp'
-import StrategyApp from './components/apps/StrategyApp'
-import AnalyticsApp from './components/apps/AnalyticsApp'
 import AboutApp from './components/apps/AboutApp'
 import RejectedIdeasApp from './components/apps/RejectedIdeasApp'
 import ContactApp from './components/apps/ContactApp'
@@ -23,9 +20,6 @@ registerAppContents({
   work: <WorkApp />,
   social: <SocialApp />,
   content: <ContentStudioApp />,
-  campaigns: <CampaignsApp />,
-  strategy: <StrategyApp />,
-  analytics: <AnalyticsApp />,
   about: <AboutApp />,
   bin: <RejectedIdeasApp />,
   linkedin: <div className="prose">
@@ -44,34 +38,54 @@ registerAppContents({
   </div>,
 })
 
-// Generating positions that cascade/overlap nicely
-function cascade(n: number) {
-  const base = { w: 660, h: 520 }
-  const x = 110 + (n % 5) * 44
-  const y = 60 + (n % 4) * 36
-  return { x, y, ...base }
+function windowLayout(app: AppKey, n: number) {
+  const width = window.innerWidth
+  const left = Math.max(120, Math.min(180, width * 0.11))
+  const rightReserve = Math.max(330, Math.min(380, width * 0.24))
+  const gap = 20
+  const contentWidth = Math.max(760, width - left - rightReserve - gap * 2)
+  const topWidth = Math.min(760, Math.floor((contentWidth - gap) / 2))
+  const bottomWidth = Math.min(560, Math.floor((contentWidth - gap * 2) / 3))
+  const topY = 58
+  const topHeight = 290
+  const bottomY = topY + topHeight + 20
+
+  const layouts: Partial<Record<AppKey, { x: number; y: number; w: number; h: number }>> = {
+    about: { x: left, y: topY, w: topWidth, h: topHeight },
+    work: { x: left + topWidth + gap, y: topY, w: topWidth, h: topHeight },
+    social: { x: left, y: bottomY, w: bottomWidth, h: 250 },
+    content: { x: left + bottomWidth + gap, y: bottomY, w: bottomWidth, h: 250 },
+    linkedin: { x: left + (bottomWidth + gap) * 2, y: bottomY, w: bottomWidth, h: 250 },
+  }
+
+  return layouts[app] ?? {
+    x: 110 + (n % 3) * 44,
+    y: 60 + (n % 3) * 36,
+    w: 660,
+    h: 520,
+  }
 }
 
 let uid = 0
 
 export default function App() {
   const [windows, setWindows] = useState<WindowState[]>([])
-  const [stackId, setStackId] = useState(0)
+  const stackId = useRef(0)
 
   const openApp = useCallback((app: AppKey) => {
+    const nextZ = ++stackId.current
     // If already open, bring to front (activate) rather than duplicate
     setWindows((prev) => {
       const existing = prev.find((w) => w.app === app)
       if (existing) {
-        setStackId((s) => s + 1)
         return prev.map((w) =>
           w.id === existing.id
-            ? { ...w, min: false, active: true, z: stackId + 1 }
+            ? { ...w, min: false, active: true, z: nextZ }
             : { ...w, active: false },
         )
       }
       uid += 1
-      const c = cascade(uid)
+      const c = windowLayout(app, uid)
       const newWin: WindowState = {
         id: `${app}-${uid}`,
         app,
@@ -79,19 +93,18 @@ export default function App() {
         ...c,
         min: false,
         active: true,
-        z: stackId + 1,
+        z: nextZ,
       }
-      setStackId((s) => s + 1)
       return [...prev.map((w) => ({ ...w, active: false })), newWin]
     })
-  }, [stackId])
+  }, [])
 
   const activate = useCallback((id: string) => {
-    setStackId((s) => s + 1)
+    const nextZ = ++stackId.current
     setWindows((prev) =>
-      prev.map((w) => (w.id === id ? { ...w, active: true, z: stackId + 1 } : { ...w, active: false })),
+      prev.map((w) => (w.id === id ? { ...w, active: true, z: nextZ } : { ...w, active: false })),
     )
-  }, [stackId])
+  }, [])
 
   const minimize = useCallback((id: string) => {
     setWindows((prev) => prev.map((w) => (w.id === id ? { ...w, min: true, active: false } : w)))
@@ -101,11 +114,7 @@ export default function App() {
     setWindows((prev) => prev.filter((w) => w.id !== id))
   }, [])
 
-  // Disable LinkedIn until real URL provided
-  const disabled = useCallback((app: AppKey) => {
-    if (app === 'linkedin') return !contact.linkedin.enabled
-    return false
-  }, [])
+  const disabled = useCallback((_app: AppKey) => false, [])
 
   // Send window state updates (clamp on window resize)
   const openKeys = useMemo(

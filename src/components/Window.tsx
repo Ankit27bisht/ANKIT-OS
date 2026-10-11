@@ -87,6 +87,12 @@ export default function OSWindow({ state, onActivate, onMinimize, onClose }: Pro
     window.addEventListener('pointerup', up)
   }, [size])
 
+  const toggleMaximize = useCallback(() => {
+    const maximized = size.w >= window.innerWidth - 40
+    setSize(maximized ? { w: state.w, h: state.h } : { w: window.innerWidth - 24, h: window.innerHeight - 90 })
+    setPos(maximized ? { x: state.x, y: state.y } : { x: 12, y: 42 })
+  }, [size.w, state.h, state.w, state.x, state.y])
+
   if (state.min) return null
 
   const AppContent = appContents[state.app]
@@ -100,15 +106,58 @@ export default function OSWindow({ state, onActivate, onMinimize, onClose }: Pro
       role="dialog"
       aria-label={state.title}
     >
-      <div className="window-titlebar" onPointerDown={startDrag}>
-        <div className="traffic">
-          <button className="t-close" title="Close" onClick={() => onClose(state.id)} aria-label="Close window">x</button>
-          <button className="t-min" title="Minimize" onClick={() => onMinimize(state.id)} aria-label="Minimize window">–</button>
+      {state.app === 'about' ? (
+        <div className="about-titlebar" onPointerDown={startDrag}>
+          <div className="about-traffic">
+            <button
+              type="button"
+              className="about-traffic-red"
+              title="Close"
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation()
+                onClose(state.id)
+              }}
+              aria-label="Close About Ankit window"
+            />
+            <button
+              type="button"
+              className="about-traffic-yellow"
+              title="Minimize"
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation()
+                onMinimize(state.id)
+              }}
+              aria-label="Minimize About Ankit window"
+            />
+            <button
+              type="button"
+              className="about-traffic-green"
+              title="Maximize or restore"
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => {
+                event.stopPropagation()
+                toggleMaximize()
+              }}
+              aria-label="Maximize or restore About Ankit window"
+            />
+          </div>
+          <span className="about-title">ABOUT ANKIT</span>
+          <button className="about-close" title="Close" onClick={() => onClose(state.id)} aria-label="Close About Ankit window">×</button>
         </div>
-        <span className="window-icon">{appMeta[state.app]?.icon}</span>
-        <span className="window-title">{state.title}</span>
-        <span className="status-pill">●</span>
-      </div>
+      ) : (
+        <div className="window-titlebar" onPointerDown={startDrag}>
+          <div className="traffic">
+            <button className="t-close" title="Close" onPointerDown={(event) => event.stopPropagation()} onClick={() => onClose(state.id)} aria-label="Close window">x</button>
+            <button className="t-min" title="Minimize" onPointerDown={(event) => event.stopPropagation()} onClick={() => onMinimize(state.id)} aria-label="Minimize window">–</button>
+            <button className="t-max" title="Maximize or restore" onPointerDown={(event) => event.stopPropagation()} onClick={toggleMaximize} aria-label="Maximize or restore window">+</button>
+          </div>
+          <span className="window-icon">{appMeta[state.app]?.icon}</span>
+          <span className="window-title">{state.title}</span>
+          <span className="status-pill">●</span>
+        </div>
+      )}
       <div className="window-body">{AppContent}</div>
       <div className="resize-handle" onPointerDown={startResize} title="Resize" />
     </div>

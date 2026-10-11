@@ -1,70 +1,112 @@
-// Pixel-art avatar rendered as an inline SVG (no external asset needed).
-
 interface Props {
-  size?: number
-  className?: string
+  size?: number;
+  className?: string;
 }
 
-type Pixel = string | null
-
-const COLORS: Record<string, string> = {
-  s: '#e8cfb0', // skin
-  h: '#3a2f1e', // hair
-  h2: '#2a2314', // hair shadow
-  o: '#20202a', // outline
-  t: '#7c5cff', // top
-  t2: '#5c3fb0', // top shade
-  w: '#0f0c1d', // bg
-}
-
-// A small pixel grid (24 wide x 28 tall) roughly: head + shoulders + top.
-const MAP: Pixel[][] = [
-  'wwwwwwwwwwwwwwwwwwwwwwww'.split(''),
-  'wwwwwwwwwwwwwwwwwwwwwwww'.split(''),
-  'wwwwwwwhhhhhhhhhhwwwwwww'.split(''),
-  'wwwwwwhhhhhhhhhhhhwwwwww'.split(''),
-  'wwwwwwhhhhhhhhhhhhwwwwww'.split(''),
-  'wwwwwhhhhhhhhhhhhhhwwwww'.split(''),
-  'wwwwhhhhhhhhhhhhhhhhwwww'.split(''),
-  'wwwwhhhhhsssssshhhhhwwww'.split(''),
-  'wwwwhhsssssssssssshhwwww'.split(''),
-  'wwwwhhsssssssssssshhwwww'.split(''),
-  'wwwwhsssssssssssssschwww'.split(''),
-  'wwwwhsssssssssssssschwww'.split(''),
-  'wwwwhssssowwssssssshhwww'.split(''),
-  'wwwwhssssowwssssssshhwww'.split(''),
-  'wwwwhsssssssssssssshhwww'.split(''),
-  'wwwwhhsssssssssssshhwwww'.split(''),
-  'wwwwohhsssssssssshhohwww'.split(''),
-  'wwwwwooooooooooooooowwww'.split(''),
-  'wwwwwwwwwwwwwwwwwwwwwwww'.split(''),
-  'wwtttttttttttttttttttwww'.split(''),
-  'wwtttttttttttttttttttwww'.split(''),
-  'wwtttttttttttttttttttwww'.split(''),
-  'wwtttttttttttttttttttwww'.split(''),
-  'wwtttttttttttttttttttwww'.split(''),
-  'wwttt22ttttttttt22tttwww'.split(''),
-  'wwwwttttttttttttttwwwwww'.split(''),
-  'wwwwwwwwwwwwwwwwwwwwwwww'.split(''),
-  'wwwwwwwwwwwwwwwwwwwwwwww'.split(''),
-]
-
-export default function Avatar({ size = 120, className }: Props) {
-  const h = MAP.length
-  const w = MAP[0]?.length ?? h
+export default function Avatar({ size = 300, className = '' }: Props) {
   return (
     <svg
       width={size}
-      height={size * (h / w)}
-      viewBox={`0 0 ${w} ${h}`}
-      shapeRendering="crispEdges"
+      height={size * 1.55}
+      viewBox="0 0 40 62"
       className={className}
+      xmlns="http://www.w3.org/2000/svg"
+      shapeRendering="crispEdges"
       role="img"
       aria-label="Pixel avatar of Ankit"
     >
-      {MAP.map((row, y) =>
-        row.map((c, x) => (c && COLORS[c] ? <rect key={`${x}-${y}`} x={x} y={y} width={1} height={1} fill={COLORS[c]} /> : null)),
-      )}
+      {/* HAIR */}
+      <rect x="13" y="2" width="13" height="2" fill="#111827" />
+      <rect x="10" y="4" width="19" height="3" fill="#111827" />
+      <rect x="8" y="7" width="4" height="4" fill="#111827" />
+      <rect x="10" y="7" width="18" height="4" fill="#111827" />
+      <rect x="28" y="8" width="3" height="5" fill="#111827" />
+      <rect x="11" y="10" width="4" height="3" fill="#111827" />
+      <rect x="26" y="10" width="3" height="3" fill="#111827" />
+
+      {/* EARS */}
+      <rect x="9" y="11" width="2" height="5" fill="#d9a886" />
+      <rect x="29" y="11" width="2" height="5" fill="#d9a886" />
+
+      {/* FACE */}
+      <rect x="11" y="9" width="18" height="11" fill="#d9a886" />
+      <rect x="12" y="20" width="16" height="2" fill="#d9a886" />
+      <rect x="14" y="22" width="12" height="3" fill="#d9a886" />
+
+      {/* EYEBROWS */}
+      <rect x="14" y="13" width="5" height="1" fill="#20202a" />
+      <rect x="21" y="13" width="5" height="1" fill="#20202a" />
+
+      {/* EYES */}
+      <rect x="15" y="15" width="2" height="2" fill="#20202a" />
+      <rect x="23" y="15" width="2" height="2" fill="#20202a" />
+
+      {/* NOSE */}
+      <rect x="19" y="16" width="2" height="2" fill="#b77763" />
+
+      {/* MOUTH */}
+      <rect x="17" y="19" width="6" height="1" fill="#8f594f" />
+
+      {/* NECK */}
+      <rect x="17" y="22" width="6" height="4" fill="#c58f72" />
+
+      {/* SHOULDERS / HOODIE */}
+      <rect x="14" y="25" width="12" height="3" fill="#111827" />
+
+      <rect x="12" y="28" width="16" height="3" fill="#111827" />
+      <rect x="10" y="31" width="20" height="13" fill="#20283b" />
+
+      <rect x="12" y="31" width="16" height="12" fill="#263044" />
+      <rect x="13" y="42" width="14" height="4" fill="#111827" />
+
+      {/* HOODIE SIDE SHADOWS */}
+      <rect x="10" y="34" width="2" height="9" fill="#111827" />
+      <rect x="28" y="34" width="2" height="9" fill="#111827" />
+
+      {/* HOODIE STRINGS */}
+      <rect x="17" y="27" width="1" height="6" fill="#8b7cff" />
+      <rect x="22" y="27" width="1" height="6" fill="#8b7cff" />
+      <rect x="16" y="32" width="3" height="2" fill="#7c5cff" />
+      <rect x="22" y="32" width="3" height="2" fill="#7c5cff" />
+
+      {/* LEFT ARM */}
+      <rect x="9" y="30" width="3" height="13" fill="#111827" />
+      <rect x="8" y="33" width="3" height="10" fill="#20283b" />
+      <rect x="7" y="42" width="4" height="4" fill="#111827" />
+
+      {/* RIGHT ARM */}
+      <rect x="28" y="30" width="3" height="13" fill="#111827" />
+      <rect x="29" y="33" width="3" height="10" fill="#20283b" />
+      <rect x="29" y="42" width="4" height="4" fill="#111827" />
+
+      {/* HANDS */}
+      <rect x="7" y="45" width="4" height="3" fill="#c58f72" />
+      <rect x="29" y="45" width="4" height="3" fill="#c58f72" />
+
+      {/* HOODIE BOTTOM */}
+      <rect x="11" y="45" width="18" height="4" fill="#111827" />
+
+      {/* PANTS */}
+      <rect x="13" y="48" width="14" height="7" fill="#111827" />
+      <rect x="14" y="48" width="5" height="8" fill="#1a2133" />
+      <rect x="21" y="48" width="5" height="8" fill="#1a2133" />
+
+      {/* LEG GAP */}
+      <rect x="19" y="54" width="2" height="4" fill="#ffffff" />
+
+      {/* LEFT SHOE */}
+      <rect x="11" y="57" width="7" height="3" fill="#d9e0e8" />
+      <rect x="10" y="59" width="9" height="2" fill="#d9e0e8" />
+      <rect x="11" y="60" width="7" height="1" fill="#b8c3d0" />
+
+      {/* RIGHT SHOE */}
+      <rect x="22" y="57" width="7" height="3" fill="#d9e0e8" />
+      <rect x="21" y="59" width="9" height="2" fill="#d9e0e8" />
+      <rect x="22" y="60" width="7" height="1" fill="#b8c3d0" />
+
+      {/* LEG SHADOWS */}
+      <rect x="14" y="53" width="5" height="3" fill="#111827" />
+      <rect x="21" y="53" width="5" height="3" fill="#111827" />
     </svg>
-  )
+  );
 }

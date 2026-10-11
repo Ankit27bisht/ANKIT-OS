@@ -51,8 +51,8 @@ export default function WorkApp() {
             </div>
 
             <div className="tags" style={{ padding: '0 14px 14px' }}>
-              {p.tags.map((t) => (
-                <span className="tag hot" key={t}>{t}</span>
+              {p.tags.map((t, index) => (
+                <span className="tag hot" key={`${t}-${index}`}>{t}</span>
               ))}
             </div>
           </article>
